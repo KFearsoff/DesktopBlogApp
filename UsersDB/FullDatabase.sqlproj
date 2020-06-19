@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>UsersDB</Name>
+    <Name>FullDatabase</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{03aeac79-2b72-4e2a-9465-4605a55d4c5b}</ProjectGuid>
@@ -57,5 +57,19 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="DatabaseOwner" />
+    <Folder Include="DatabaseOwner\Tables" />
+    <Folder Include="PublishLocations" />
+    <Folder Include="DatabaseOwner\Views" />
+    <Folder Include="DatabaseOwner\Stored Procedures" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="DatabaseOwner\Tables\UsersTable.sql" />
+    <Build Include="DatabaseOwner\Tables\BlogPostsTable.sql" />
+    <Build Include="DatabaseOwner\Views\FullUserView.sql" />
+    <Build Include="DatabaseOwner\Stored Procedures\spUser_FilterByUsername.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PublishLocations\LocalFullDatabase.publish.xml" />
   </ItemGroup>
 </Project>
