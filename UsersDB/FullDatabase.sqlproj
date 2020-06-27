@@ -67,7 +67,13 @@
     <Build Include="DatabaseOwner\Tables\UsersTable.sql" />
     <Build Include="DatabaseOwner\Tables\BlogPostsTable.sql" />
     <Build Include="DatabaseOwner\Views\FullUserView.sql" />
-    <Build Include="DatabaseOwner\Stored Procedures\spUser_FilterByUsername.sql" />
+    <Build Include="DatabaseOwner\Stored Procedures\spUser_CheckForUsernameAndPassword.sql" />
+    <Build Include="DatabaseOwner\Stored Procedures\spUser_AddUsernameAndPassword.sql" />
+    <Build Include="DatabaseOwner\Stored Procedures\spBlog_GetBlogs.sql" />
+    <Build Include="DatabaseOwner\Stored Procedures\spUser_CheckForUsername.sql" />
+    <Build Include="DatabaseOwner\Stored Procedures\spUser_CheckForPassword.sql" />
+    <Build Include="DatabaseOwner\Stored Procedures\spBlog_GetBlogContentById.sql" />
+    <Build Include="DatabaseOwner\Stored Procedures\spBlog_AddBlog.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\LocalFullDatabase.publish.xml" />
