@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FormUI
 {
-    public static class PasswordEncrypter
+    public class SHA256 : IPasswordEncrypter
     {
-        public static string Encrypt(string password)
+        public string Encrypt(string password)
         {
-            using (SHA256 sha256 = SHA256.Create())
+            using (System.Security.Cryptography.SHA256 sha256 = System.Security.Cryptography.SHA256.Create())
             {
                 byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
 

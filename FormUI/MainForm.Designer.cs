@@ -95,6 +95,7 @@
             // 
             // buttonAddPost
             // 
+            this.buttonAddPost.Enabled = false;
             this.buttonAddPost.Location = new System.Drawing.Point(498, 228);
             this.buttonAddPost.Name = "buttonAddPost";
             this.buttonAddPost.Size = new System.Drawing.Size(90, 23);

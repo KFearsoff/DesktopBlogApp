@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FormUI
 {
-    public static class Helper
+    public class Helper : IHelper
     {
-        public static string CnnVal(string name)
+        public string CnnVal(string name)
         {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }

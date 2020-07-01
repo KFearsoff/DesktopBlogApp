@@ -12,9 +12,14 @@ namespace FormUI
 {
     public partial class SignInForm : Form
     {
-        public SignInForm()
+        IDataAccess _dataAccess;
+        IPasswordEncrypter _passwordEncrypter;
+
+        public SignInForm(IDataAccess dataAccess, IPasswordEncrypter passwordEncrypter)
         {
             InitializeComponent();
+            _dataAccess = dataAccess;
+            _passwordEncrypter = passwordEncrypter;
         }
 
         private void buttonSignIn_Click(object sender, EventArgs e)
@@ -24,7 +29,7 @@ namespace FormUI
                 MessageBox.Show("The username is too long!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (DataAccess.SignIn(textBoxUsername.Text, PasswordEncrypter.Encrypt(textBoxPassword.Text), out MainForm.CurrentUser))
+            if (_dataAccess.SignIn(textBoxUsername.Text, _passwordEncrypter.Encrypt(textBoxPassword.Text), out MainForm.CurrentUser))
                 Close();
             else MessageBox.Show("There is no such user!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }

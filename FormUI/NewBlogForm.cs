@@ -12,9 +12,12 @@ namespace FormUI
 {
     public partial class NewBlogForm : Form
     {
-        public NewBlogForm()
+        IDataAccess _dataAccess;
+
+        public NewBlogForm(IDataAccess dataAccess)
         {
             InitializeComponent();
+            _dataAccess = dataAccess;
         }
 
         private void buttonPublish_Click(object sender, EventArgs e)
@@ -24,7 +27,7 @@ namespace FormUI
                 MessageBox.Show("The title is too long!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            DataAccess.AddBlog(MainForm.CurrentUser.Id, textBoxTitle.Text, textBoxContents.Text);
+            _dataAccess.AddBlog(MainForm.CurrentUser.Id, textBoxTitle.Text, textBoxContents.Text);
             Close();
         }
     }

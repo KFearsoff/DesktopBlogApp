@@ -55,7 +55,11 @@
   <ItemGroup>
     <Compile Include="BlogPost.cs" />
     <Compile Include="DataAccess.cs" />
+    <Compile Include="Factory.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="IDataAccess.cs" />
+    <Compile Include="IHelper.cs" />
+    <Compile Include="IPasswordEncrypter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,7 +72,7 @@
     <Compile Include="NewBlogForm.Designer.cs">
       <DependentUpon>NewBlogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PasswordEncrypter.cs" />
+    <Compile Include="SHA256.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignInForm.cs">

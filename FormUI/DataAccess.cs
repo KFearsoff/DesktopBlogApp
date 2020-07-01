@@ -8,37 +8,46 @@ using Dapper;
 
 namespace FormUI
 {
-    public class DataAccess
+    public class DataAccess : IDataAccess
     {
-        public static List<BlogPost> GetBlogPosts(int UserId)
+        IHelper _helper;
+
+        public DataAccess(IHelper helper)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("BlogAppDB")))
+            _helper = helper;
+        }
+
+
+        public List<BlogPost> GetBlogPosts(int userId)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_helper.CnnVal("BlogAppDB")))
             {
-                var output = connection.Query<BlogPost>($"spBlog_GetBlogs '{UserId}'").ToList();
+                var output = connection.Query<BlogPost>($"spBlog_GetBlogs @UserId", new { UserId = userId }).ToList();
                 return output;
             }
         }
 
-        public static string GetBlogContent(BlogPost blogPost)
+        public string GetBlogContent(BlogPost blogPost)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("BlogAppDB")))
+            if (blogPost == null) return "";
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_helper.CnnVal("BlogAppDB")))
             {
                 var output = connection.Query<string>($"spBlog_GetBlogContentById '{blogPost.Id}'").First();
                 return output;
             }
         }
 
-        public static void AddBlog(int userId, string postTitle, string postContents)
+        public void AddBlog(int userId, string postTitle, string postContents)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("BlogAppDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_helper.CnnVal("BlogAppDB")))
             {
-                connection.Query($"spBlog_AddBlog '{userId}', '{postTitle}', '{postContents}'");
+                connection.Query<BlogPost>($"spBlog_AddBlog '{userId}', '{postTitle}', '{postContents}'");
             }
         }
 
-        public static bool SignIn(string username, string password, out User user)
+        public bool SignIn(string username, string password, out User user)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("BlogAppDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_helper.CnnVal("BlogAppDB")))
             {
                 var output = connection.Query<User>($"spUser_CheckForUsernameAndPassword '{username}', '{password}'");
                 if (output.Count() == 1)
@@ -51,9 +60,9 @@ namespace FormUI
             }
         }
 
-        public static bool SignUp(string username, string password)
+        public bool SignUp(string username, string password)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("BlogAppDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_helper.CnnVal("BlogAppDB")))
             {
                 if (connection.Query<int>($"spUser_CheckForUsername '{username}'").First() == 1 ||
                     connection.Query<int>($"spUser_CheckForPassword '{password}'").First() == 1)

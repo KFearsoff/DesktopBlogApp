@@ -12,15 +12,20 @@ namespace FormUI
 {
     public partial class SignUpForm : Form
     {
-        public SignUpForm()
+        IDataAccess _dataAccess;
+        IPasswordEncrypter _passwordEncrypter;
+
+        public SignUpForm(IDataAccess dataAccess, IPasswordEncrypter passwordEncrypter)
         {
             InitializeComponent();
+            _dataAccess = dataAccess;
+            _passwordEncrypter = passwordEncrypter;
         }
 
         private void buttonSignUp_Click(object sender, EventArgs e)
         {
             string username = textBoxUsername.Text;
-            string password = PasswordEncrypter.Encrypt(textBoxPassword.Text);
+            string password = _passwordEncrypter.Encrypt(textBoxPassword.Text);
 
             if (textBoxPassword.Text != textBoxRepeatPassword.Text)
             {
@@ -28,13 +33,13 @@ namespace FormUI
                 return;
             }
 
-            if (!DataAccess.SignUp(username, password))
+            if (!_dataAccess.SignUp(username, password))
             {
                 MessageBox.Show("There is already a user with those credentials!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            DataAccess.SignIn(username, password, out MainForm.CurrentUser);
+            _dataAccess.SignIn(username, password, out MainForm.CurrentUser);
             Close();
         }
     }
